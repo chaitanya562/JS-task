@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>JavaScript Functions</h2>
+
+
+<p id="JavaScript"></p>
+
+<script>
+
+// function person1age(yearOfBirth) {
+//   const age = new Date().getFullYear();
+//   return age-yearOfBirth;
+// }
+// const person1= person1age(2001)
+// console.log('person1',person1);
+
+// const person1age = yearOfbirth => new Date().getFullYear()-yearOfbirth;
+// const person1= person1age(2001)
+
+// console.log('person1',person1);
+
+// const movies=[];
+// const createMovies = function(name, hero, price){
+//      hero = hero || 'venky';
+
+//     const booking={
+//         name,
+//         hero,
+//         price
+//     };
+//     console.log('booking',booking);
+
+//     }
+// createMovies('rakhi') 
+
+// let url = 'https://geocode.xyz/51.50354,-0.12768?geoit=xml'
+// const getLatLong = function (url, errorMsg = 'wrong lat and long'){
+//     return fetch(url).then(resonse =>{
+//         if(!response.ok) throw new Error(`${errorMsg} (${response.status})`);
+//     return response.json();
+//     });
+//     console.log('getLatLong',getLatLong);
+// }
+// getLatLong('LONDON')
+
+// fetch(url,{mode:'no-cors'}).then(response =>{
+
+ function location1(lat, long){
+    var url = `https://geocode.xyz/${lat},${long}?geoit=json`;
+    fetch(url)
+    .then(response => response.json())
+    .then(result=>{
+   console.log(result);
+    });
+    // $.ajax({
+    //     url: url,
+    //     type: 'GET',
+    //     dataType: 'JSON',
+    //     success: function(result){
+    //         console.log(result);
+    //     }
+    // })
+ }
+//  location1(52.508,13.381);
+
+ function location2(lat, long){
+ let promise = new Promise(function (resolve, reject){
+   var url = `https://geocode.xyz/${lat},${long}?geoit=json`;
+   fetch(url)
+    .then(function(response){
+      return response.json();
+    })
+    .then(function(result){
+       
+    console.log(result.city,result.state, result.country);
+    }).catch(err => console.error(err.error.message))
+
+ })
+ }
+//  location2(15.9128998,79.7399875);
+
+//  {
+//   "success": false,
+//   "error": {
+//     "code": "006",
+//     "message": "Request Throttled. Over Rate limit: up to 2 per sec. See geocode.xyz/pricing",
+//     "requests": "20"
+//   }
+// }
+
+let location3 = (lat, long)=>{
+ let promise = new Promise(function (resolve, reject){
+   var url = `https://geocode.xyz/${lat},${long}?geoit=json`;
+   fetch(url)
+    .then((response)=>{
+      return response.json();
+    })
+    .then((result)=>{
+
+      let state = result.state;
+      if(state){
+         resolve(result)
+      }else{
+         reject(result)
+      }
+    }) 
+    });
+    promise.then(result=>{
+console.log(`location ${result.state}, ${result.country}`)
+    }).catch(result=>{
+      console.log(result.error.message)
+    })
+
+ }
+
+ location3(52.508,13.381);
+
+
+//  .catch(err => console.error(err.error.message))
+//  fetch(url).then(function (response) {
+// 	// The API call was successful!
+// 	if (response.ok) {
+// 		return response.json();
+// 	} else {
+// 		return Promise.reject(response);
+// 	}
+// }).then(function (data) {
+// 	// This is the JSON from our response
+// 	console.log(data);
+// }).catch(function (err) {
+// 	// There was an error
+// 	console.warn('Something went wrong.', err);
+// });
+
+</script>
+
+</body>
+</html>
